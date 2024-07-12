@@ -1,0 +1,40 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" >
+    <title>{{ algorithm }} Forecast Results</title>
+</head>
+<body>
+    {% if current_user.is_authenticated %}
+    <div class="menu">
+        <div class="menu-btn" onclick="toggleMenu()">☰</div>
+        <div class="menu-content" id="menu-content">
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="mailto:“krisha@gmail.com">Support</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </div>
+    <p>Hello, {{ current_user.username }}!</p>
+    {% else %}
+    <p><a href="{{ url_for('login') }}">Login</a> or <a href="{{ url_for('signup') }}">Sign up</a> to get started.</p>
+    {% endif %}
+
+    <h1>{{ algorithm }} Forecast Results</h1>
+    <h2>Mean Squared Error (MSE): {{ mse }}</h2>
+    <div class="img">
+    <img src="{{ url_for('static', filename='forecast_plot.png') }}" alt="Forecast Plot">
+    </div>
+    <script>
+        function toggleMenu() {
+            var menu = document.getElementById('menu-content');
+            if (menu.style.display === 'none' || menu.style.display === '') {
+                menu.style.display = 'block';
+            } else {
+                menu.style.display = 'none';
+            }
+        }
+    </script>
+
+</body>
+</html>

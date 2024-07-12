@@ -1,0 +1,54 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" >
+    <title>Dataset Upload</title>
+</head>
+<body>
+    <h1>Welcome to Forcastify</h1>
+    <h1>Upload your dataset</h1>
+    {% if current_user.is_authenticated %}
+    <div class="menu">
+        <div class="menu-btn" onclick="toggleMenu()">☰</div>
+        <div class="menu-content" id="menu-content">
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="mailto:“krisha@gmail.com">Support</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </div>
+
+    <p style="font-size: 20px;">Hello, {{ current_user.username }}!</p>
+{% else %}
+    <p style="font-size: 16px;"> <a href="{{ url_for('login') }}">Login</a> or <a href="{{ url_for('signup') }}">Sign up</a> to get started.</p>
+{% endif %}
+
+<form action="/forecast" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" accept=".csv">
+    <select name="algorithm" style="font-size: 16px;">
+        <option value="Linear Regression">Linear Regression</option>
+        <option value="Random Forest">Random Forest</option>
+        <option value="Decision Tree">Decision Tree</option>
+        <option value="Support Vector Machine">Support Vector Machine</option>
+        <option value="K-Nearest Neighbors">K-Nearest Neighbors</option>
+        <option value="Multi-layer Perceptron">Multi-layer Perceptron</option>
+    </select>
+
+    <input type="submit" value="Forecast" style="font-size: 16px;">
+</form>
+
+     {% if error %}
+    <p style="color: red;">{{ error }}</p>
+    {% endif %}
+    <script>
+        function toggleMenu() {
+            var menu = document.getElementById('menu-content');
+            if (menu.style.display === 'none' || menu.style.display === '') {
+                menu.style.display = 'block';
+            } else {
+                menu.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
